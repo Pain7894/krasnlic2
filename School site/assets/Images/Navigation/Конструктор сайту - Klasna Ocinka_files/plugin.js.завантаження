@@ -1,0 +1,177 @@
+﻿/*
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.html or http://ckeditor.com/license
+*/
+
+/**
+ * @fileOverview The "placeholder" plugin.
+ *
+ */
+
+(function()
+{
+	var flashplaceholderReplaceRegex = /\[\[flashtask[^\[\]]+\]\]/g;
+	CKEDITOR.plugins.add( 'flashplaceholder',
+	{
+		requires : [ 'dialog' ],
+		lang : [ 'en', 'ru', 'ua' ],
+		init : function( editor )
+		{
+			var lang = editor.lang.flashplaceholder;
+
+			editor.addCommand( 'createflashplaceholder', new CKEDITOR.dialogCommand( 'createflashplaceholder' ) );
+			editor.addCommand( 'editflashplaceholder', new CKEDITOR.dialogCommand( 'editflashplaceholder' ) );
+
+			editor.ui.addButton( 'CreateFlashplaceholder',
+			{
+				label : lang.toolbar,
+				command :'createflashplaceholder',
+				icon : this.path + 'flashplaceholder.png'
+			});
+
+			if ( editor.addMenuItems )
+			{
+				editor.addMenuGroup( 'flashplaceholder', 20 );
+				editor.addMenuItems(
+					{
+						editflashplaceholder :
+						{
+							label : lang.edit,
+							command : 'editflashplaceholder',
+							group : 'flashplaceholder',
+							order : 1,
+							icon : this.path + 'flashplaceholder.png'
+						}
+					} );
+
+				if ( editor.contextMenu )
+				{
+					editor.contextMenu.addListener( function( element, selection )
+						{
+							if ( !element || !element.data( 'cke-flashplaceholder' ) )
+								return null;
+
+							return { editflashplaceholder : CKEDITOR.TRISTATE_OFF };
+						} );
+				}
+			}
+
+			editor.on( 'doubleclick', function( evt )
+				{
+					if ( CKEDITOR.plugins.flashplaceholder.getSelectedPlaceHoder( editor ) )
+						evt.data.dialog = 'editflashplaceholder';
+				});
+
+			editor.addCss(
+				'.cke_flashplaceholder' +
+				'{' +
+					'background: #f1f1f1 url("/ckeditor/plugins/flashplaceholder/flashplaceholder32.png") no-repeat left;font-size:14px;padding:5px;padding-left:40px;' +
+					( CKEDITOR.env.gecko ? 'cursor: default;' : '' ) +
+				'}'
+			);
+
+			editor.on( 'contentDom', function()
+				{
+					editor.document.getBody().on( 'resizestart', function( evt )
+						{
+							if ( editor.getSelection().getSelectedElement().data( 'cke-flashplaceholder' ) )
+								evt.data.preventDefault();
+						});
+				});
+
+			CKEDITOR.dialog.add( 'createflashplaceholder', this.path + 'dialogs/flashplaceholder.js' );
+			CKEDITOR.dialog.add( 'editflashplaceholder', this.path + 'dialogs/flashplaceholder.js' );
+		},
+		afterInit : function( editor )
+		{
+			var dataProcessor = editor.dataProcessor,
+				dataFilter = dataProcessor && dataProcessor.dataFilter,
+				htmlFilter = dataProcessor && dataProcessor.htmlFilter;
+
+			if ( dataFilter )
+			{
+				dataFilter.addRules(
+				{
+					text : function( text )
+					{
+						return text.replace( flashplaceholderReplaceRegex, function( match )
+							{
+								return CKEDITOR.plugins.flashplaceholder.createFlashplaceholder( editor, null, match, 1 );
+							});
+					}
+				});
+			}
+
+			if ( htmlFilter )
+			{
+				htmlFilter.addRules(
+				{
+					elements :
+					{
+						'span' : function( element )
+						{
+							if ( element.attributes && element.attributes[ 'data-cke-flashplaceholder' ] ){
+								//alert(element.text);
+								//for (i in element.parent.children[0]) alert(i+"="+element.parent.children[0][i]);
+								//var txt=element.getText();
+								element.children = [ new CKEDITOR.htmlParser.text("[["+element.attributes['flashmetka']+"]]") ]
+								delete element.name;
+							}
+						}
+					}
+				});
+			}
+		}
+	});
+})();
+
+CKEDITOR.plugins.flashplaceholder =
+{
+	createFlashplaceholder : function( editor, oldElement, text, isGet )
+	{
+		var element = new CKEDITOR.dom.element( 'span', editor.document );
+		element.setAttributes(
+			{
+				contentEditable		: 'false',
+				'data-cke-flashplaceholder'	: 1,
+				'class'			: 'cke_flashplaceholder',
+				'flashmetka'	: text.slice( 2, -2 )
+			}
+		);
+
+		text && element.setText( text.slice( 2, -2 ) );
+
+		if ( isGet )
+			return element.getOuterHtml();
+
+		if ( oldElement )
+		{
+			if ( CKEDITOR.env.ie )
+			{
+				element.insertAfter( oldElement );
+				// Some time is required for IE before the element is removed.
+				setTimeout( function()
+					{
+						oldElement.remove();
+						element.focus();
+					}, 10 );
+			}
+			else
+				element.replace( oldElement );
+		}
+		else
+			editor.insertElement( element );
+
+		return null;
+	},
+
+	getSelectedPlaceHoder : function( editor )
+	{
+		var range = editor.getSelection().getRanges()[ 0 ];
+		range.shrink( CKEDITOR.SHRINK_TEXT );
+		var node = range.startContainer;
+		while( node && !( node.type == CKEDITOR.NODE_ELEMENT && node.data( 'cke-flashplaceholder' ) ) )
+			node = node.getParent();
+		return node;
+	}
+};

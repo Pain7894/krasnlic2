@@ -1,0 +1,103 @@
+/*--STEPS----------------------------------------------------------------*/
+div.instepc{
+	float:left;
+	background:url('../img/step/arrow_c.gif') repeat-x center;
+	height:57px;
+}
+div.instep{
+	padding-left:3px;
+	padding-right:3px;
+}
+div.arrow_bleft{
+	background:url('../img/step/arrow_bleft.gif') no-repeat top center;
+	width:4px;
+	height:57px;
+	float:left;
+}
+div.arrow_left{
+	background:url('../img/step/arrow_left.gif') no-repeat top center;
+	width:25px;
+	height:57px;
+	float:left;
+}
+div.arrow_right{
+	background:url('../img/step/arrow_right.gif') no-repeat top center;
+	width:29px;
+	height:57px;
+	float:left;
+}
+div.arrow_eright{
+	background:url('../img/step/arrow_eright.gif') no-repeat top center;
+	width:4px;
+	height:57px;
+	float:left;
+}
+
+div.application_step, div.application_step a, div.application_step a:visited{
+	font-family:Tahoma;
+	font-size:15px;
+	color:#3A718F;
+	float:left;
+	margin:0px;
+	text-decoration:none;
+	line-height:53px;
+}
+
+div.application_step_current, div.application_step_current a{
+	font-family:Tahoma;
+	font-size:15px;
+	color: #BD2218;
+	float:left;
+	margin:0px;
+	text-decoration:none;
+	line-height:53px;
+}
+
+.small_steps div.application_step, .small_steps div.application_step a, .small_steps div.application_step a:visited,
+.small_steps div.application_step_current, .small_steps div.application_step_current a{
+	font-size:12px;
+}
+.w_60 .instep{
+	width:60px;
+}
+.small_steps .instep,.w_70 .instep{
+	position:relative;
+	width:70px;
+}
+.w_80 .instep{
+	width:80px;
+}
+.w_90 .instep{
+	width:90px;
+}
+.w_100 .instep{
+	width:100px;
+}
+.w_120 .instep{
+	width:120px;
+}
+.w_140 .instep{
+	width:140px;
+}
+.small_steps a{
+	position:absolute;
+	width:150px;
+}
+div.application_step a, div.application_step a:visited, div.application_step_current a, div.application_step_current a:visited{
+	padding-left:0px;
+}
+/*--STEP-1----------------------------------------------------------------*/
+img.grey_border{
+	border:1px solid #C3C9CC;
+}
+
+.little_steps div.application_step, .little_steps  div.application_step a, .little_steps  div.application_step a:visited, .little_steps div.application_step_current, .little_steps div.application_step_current a{
+	font-size:10px;
+}
+.little_steps div.arrow_left {
+    width: 24px;
+}
+.little_steps div.instep{
+	padding-left:1px;
+	padding-right:1px;
+}

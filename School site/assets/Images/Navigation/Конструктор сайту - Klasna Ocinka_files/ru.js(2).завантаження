@@ -1,0 +1,11 @@
+﻿CKEDITOR.plugins.setLang( 'metka', 'ru',
+{
+	metka :
+	{
+		title		: 'Свойства метки',
+		toolbar		: 'Добавить метку',
+		text		: 'Пожалуйста, выберите категорию, которая должна отображаться на странице:',
+		edit		: 'Изменить метку',
+		textMissing	: 'The placeholder must contain text.'
+	}
+});

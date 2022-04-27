@@ -1,0 +1,283 @@
+﻿/*
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.html or http://ckeditor.com/license
+*/
+
+/**
+ * @fileOverview The "placeholder" plugin.
+ *
+ */
+
+(function()
+{
+	var gadgetReplaceRegex = /\[\[flashtask[^\[\]]+\]\]/g;
+	CKEDITOR.plugins.add( 'gadget',
+	{
+		requires : [ 'dialog' ],
+		lang : [ 'en', 'ru', 'ua' ],
+		init : function( editor )
+		{
+			var lang = editor.lang.gadget;
+
+			editor.addCommand( 'creategadget', new CKEDITOR.dialogCommand( 'creategadget' ) );
+			editor.addCommand( 'editgadgettabs', new CKEDITOR.dialogCommand( 'editgadgettabs' ) );
+
+			editor.ui.addButton( 'CreateGadget',
+			{
+				label : lang.toolbar,
+				command :'creategadget',
+				icon : this.path + 'gadget.png'
+			});
+
+			/*
+			if ( editor.addMenuItems )
+			{
+				editor.addMenuGroup( 'gadget', 20 );
+				editor.addMenuItems(
+					{
+						editgadget :
+						{
+							label : lang.edit,
+							command : 'editgadget',
+							group : 'gadget',
+							order : 1,
+							icon : this.path + 'gadget.png'
+						}
+					} );
+
+				if ( editor.contextMenu )
+				{
+					editor.contextMenu.addListener( function( element, selection )
+						{
+							if ( !element || !element.data( 'cke-gadget' ) )
+								return null;
+
+							return { editgadget : CKEDITOR.TRISTATE_OFF };
+						} );
+				}
+			}
+			*/
+
+			editor.on( 'doubleclick', function( evt )
+				{
+					if ( CKEDITOR.plugins.gadget.getSelectedGadgetTabs( editor ) ){
+					alert('edit');
+						evt.data.dialog = 'editgadgettabs';
+					}
+				});
+
+			editor.addCss(
+				'._editor_tabs' +
+				'{' +
+					'border:1px solid #fb481f;border-radius:4px;background-color:#ffffff;' +
+				'}'+
+				'._editor_tabs ul._editor_tabs_ul' +
+				'{' +
+					'margin:5px;padding:0px;padding-left:5px;height:43px;background-color:#fb481f;border-radius:4px;' +
+				'}'+
+				'._editor_tabs ul._editor_tabs_ul li' +
+				'{' +
+					'float:left;margin-right: 5px;margin-top: 5px;list-style:none;font-weight:bold;border:1px solid white;border-radius:4px;padding:10px;background-color:#FFFFFF' +
+				'}'+
+				'._editor_tabs ul._editor_tabs_ul li a' +
+				'{' +
+					'font-size:16px;font-weight:bold;color:#fb481f;text-decoration:none' +
+				'}'+
+				'._editor_tabs div' +
+				'{' +
+					'clear:left;margin:5px;border:1px dotted #fb481f;border-radius:4px;padding:10px;' +
+				'}'+
+
+				'._editor_tabs.tabs_green, ._editor_tabs.tabs_green div' +
+				'{' +
+					'border-color:#84ba30;' +
+				'}'+
+				'._editor_tabs.tabs_green ul._editor_tabs_ul' +
+				'{' +
+					'background-color:#84ba30;' +
+				'}'+
+				'._editor_tabs.tabs_green ul._editor_tabs_ul li a' +
+				'{' +
+					'color:#84ba30;' +
+				'}'+
+
+				'._editor_tabs.tabs_blue, ._editor_tabs.tabs_blue div' +
+				'{' +
+					'border-color:#207ac3;' +
+				'}'+
+				'._editor_tabs.tabs_blue ul._editor_tabs_ul' +
+				'{' +
+					'background-color:#207ac3;' +
+				'}'+
+				'._editor_tabs.tabs_blue ul._editor_tabs_ul li a' +
+				'{' +
+					'color:#207ac3;' +
+				'}'
+			);
+
+			editor.on( 'contentDom', function()
+				{
+					editor.document.getBody().on( 'resizestart', function( evt )
+						{
+							if ( editor.getSelection().getSelectedElement().data( 'cke-gadget' ) )
+								evt.data.preventDefault();
+						});
+				});
+
+			CKEDITOR.dialog.add( 'creategadget', this.path + 'dialogs/gadget.js' );
+			CKEDITOR.dialog.add( 'editgadgettabs', this.path + 'dialogs/gadget.js' );
+		},
+		afterInit : function( editor )
+		{
+			var dataProcessor = editor.dataProcessor,
+				dataFilter = dataProcessor && dataProcessor.dataFilter,
+				htmlFilter = dataProcessor && dataProcessor.htmlFilter;
+/*
+			if ( dataFilter )
+			{
+			dataFilter.addRules(
+				{
+					elements :
+				  	{
+					  'div' : function( element )
+					  {
+						  var tabsClass = String(element.attributes[ 'class' ]);
+						  if (tabsClass.indexOf('_editor_tabs')!=-1)
+						  {
+						  		//createGadgetTabs : function( editor, oldElement, text, isGet )
+								return CKEDITOR.plugins.gadget.createGadgetTabs( editor, null, 'xcvxcv', 1 );
+						  }
+					  },
+					}
+				});
+			}
+
+			if ( htmlFilter )
+			{
+				htmlFilter.addRules(
+				{
+					elements :
+					{
+						'span' : function( element )
+						{
+							if ( element.attributes && element.attributes[ 'data-cke-gadget' ] ){
+								//alert(element.text);
+								//for (i in element.parent.children[0]) alert(i+"="+element.parent.children[0][i]);
+								//var txt=element.getText();
+								element.children = [ new CKEDITOR.htmlParser.text("[["+element.attributes['flashmetka']+"]]") ]
+								delete element.name;
+							}
+						}
+					}
+				});
+			}
+*/
+		}
+	});
+})();
+
+CKEDITOR.plugins.gadget =
+{
+	createGadget : function( editor, text)
+	{
+		editor.insertHtml(text);
+		return null;
+	},
+
+	createGadgetTabs : function( editor, oldElement, text, col, isGet )
+	{
+		var element = new CKEDITOR.dom.element( 'div', editor.document );
+		element.setAttributes(
+			{
+				//contentEditable		: 'false',
+				//'data-cke-flashplaceholder'	: 1,
+				'class'			: '_editor_tabs tabs_'+col,
+				//'flashmetka'	: text.slice( 2, -2 )
+			}
+		);
+
+		text && element.setHtml( text);
+
+		if ( isGet )
+			return element.getOuterHtml();
+
+		if ( oldElement )
+		{
+			if ( CKEDITOR.env.ie )
+			{
+				element.insertAfter( oldElement );
+				// Some time is required for IE before the element is removed.
+				setTimeout( function()
+					{
+						oldElement.remove();
+						element.focus();
+					}, 10 );
+			}
+			else
+				element.replace( oldElement );
+		}
+		else
+			editor.insertElement( element );
+
+		return null;
+		/*editor.insertHtml(text);
+		return null;
+		var lang = editor.lang.gadget;
+		var element = new CKEDITOR.dom.element( 'div', editor.document );
+		var tabs_class="red";
+		if(text.indexOf('tabs_green')!=-1){
+			tabs_class="green";
+		}
+		else if(text.indexOf('tabs_blue')!=-1){
+			tabs_class="blue";
+		}
+
+		element.setAttributes(
+			{
+				contentEditable		: 'false',
+				'data-cke-gadgettabs'	: 1,
+				'class'			: 'cke_gadgettabs_'+tabs_class,
+				'gadgettabs'	: text
+			}
+		);
+
+		//text && element.setHtml( text);
+
+		element.setText(lang.tabs);
+
+		if ( isGet )
+			return element.getOuterHtml();
+
+		if ( oldElement )
+		{
+			if ( CKEDITOR.env.ie )
+			{
+				element.insertAfter( oldElement );
+				// Some time is required for IE before the element is removed.
+				setTimeout( function()
+					{
+						oldElement.remove();
+						element.focus();
+					}, 10 );
+			}
+			else
+				element.replace( oldElement );
+		}
+		else
+			editor.insertElement( element );
+
+		return null;*/
+	},
+
+	getSelectedGadgetTabs : function( editor )
+	{
+		var range = editor.getSelection().getRanges()[ 0 ];
+		range.shrink( CKEDITOR.SHRINK_TEXT );
+		var node = range.startContainer;
+		//for(i in node) alert(i+"="+node[i]);
+		// && node.data( 'cke-gadget' )
+		while( node && ( node.type != CKEDITOR.NODE_ELEMENT || !node.hasClass( '_editor_tabs' )))
+			node = node.getParent();
+		return node;
+	}
+};

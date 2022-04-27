@@ -1,0 +1,354 @@
+/*
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.html or http://ckeditor.com/license
+*/
+
+CKEDITOR.editorConfig = function( config )
+{
+	// Define changes to default configuration here. For example:
+	// config.language = 'fr';
+	// config.uiColor = '#AADC6E';
+
+	//config.allowedContent = true;
+
+	config.toolbar_Full =
+	[
+		{ name: 'document', items : [ 'Source','-','Save','NewPage','DocProps','Preview','Print','-','Templates' ] },
+		{ name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },
+		{ name: 'editing', items : [ 'Find','Replace','-','SelectAll','-','SpellChecker', 'Scayt' ] },
+		{ name: 'forms', items : [ 'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton',
+
+	         'HiddenField' ] },
+		'/',
+		{ name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
+		{ name: 'paragraph', items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','CreateDiv','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','BidiLtr','BidiRtl' ] },
+		{ name: 'links', items : [ 'Link','Unlink','Anchor' ] },
+		{ name: 'insert', items : [ 'Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak','Iframe' ] },
+		'/',
+		{ name: 'styles', items : [ 'Styles','Format','Font','FontSize' ] },
+		{ name: 'colors', items : [ 'TextColor','BGColor' ] },
+		{ name: 'tools', items : [ 'Maximize', 'ShowBlocks','-','About' ] }
+	];
+
+	config.toolbar_Basic =
+	[
+		['Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink','-','About']
+	];
+	config.toolbar_General =
+	[
+		{ name: 'document', items : [ 'Source','-','Preview','-','Templates' ] },
+		{ name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','-','Undo','Redo' ] },
+		{ name: 'editing', items : [ 'Find','Replace','-','SelectAll' ] },
+		{ name: 'tools', items : [ 'Maximize', 'ShowBlocks'] },
+		'/',
+		{ name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
+		{ name: 'paragraph', items : [ 'NumberedList','BulletedList','-','CreateDiv','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'] },
+		{ name: 'links', items : [ 'Link','Unlink'] },
+		'/',
+		{ name: 'styles', items : [ 'Styles','Format'] },
+		{ name: 'insert', items : [ 'Image','Flash','Table','HorizontalRule','PageBreak','CreateMetka'] },//©Rost	show any Photoalbum in ckeditor -> metka FOR NEWS ADD ,'CreateMetka'
+	];
+	config.toolbar_Site =
+	[
+		{ name: 'document', items : [ 'Source','-','Preview','-','Templates' ] },
+		{ name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','CreateWorddoc','-','Undo','Redo' ] },
+		{ name: 'editing', items : [ 'Find','Replace','-','SelectAll' ] },
+		{ name: 'tools', items : [ 'Maximize', 'ShowBlocks'] },
+		'/',
+		{ name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
+		{ name: 'paragraph', items : [ 'NumberedList','BulletedList','-','CreateDiv','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'] },
+		{ name: 'links', items : [ 'Link','Unlink','carouselButton'] },//carouselButton 28.12.17
+		{ name: 'gadget', items : [ 'CreateGadget'] },
+		'/',
+		{ name: 'styles', items : [ 'Styles','Format'] },
+		{ name: 'insert', items : [ 'Image','Flash','Table','HorizontalRule','PageBreak','CreateMetka'] },
+	];
+	config.toolbar_SiteFull =
+	[
+		{ name: 'document', items : [ 'Source','-','Preview','-','Templates' ] },
+		{ name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','CreateWorddoc','-','Undo','Redo' ] },
+		{ name: 'editing', items : [ 'Find','Replace','-','SelectAll' ] },
+		{ name: 'tools', items : [ 'Maximize', 'ShowBlocks'] },
+		'/',
+		{ name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
+		{ name: 'paragraph', items : [ 'NumberedList','BulletedList','-','CreateDiv','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'] },
+		{ name: 'links', items : [ 'Link','Unlink','carouselButton'] },//carouselButton 28.12.17
+		{ name: 'gadget', items : [ 'CreateGadget'] },
+		'/',
+		{ name: 'styles', items : [ 'Styles','Format','Font','FontSize','TextColor','BGColor' ] },
+		{ name: 'insert', items : [ 'Image','Flash','Table','HorizontalRule','PageBreak','CreateMetka'] },
+	];
+	config.toolbar_Lection =
+	[
+		{ name: 'document', items : [ 'Source','-','Preview','-','Templates' ] },
+		{ name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','CreateWorddoc','-','Undo','Redo' ] },
+		{ name: 'editing', items : [ 'Find','Replace','-','SelectAll' ] },
+		{ name: 'tools', items : [ 'Maximize', 'ShowBlocks'] },
+		'/',
+		{ name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
+		{ name: 'paragraph', items : [ 'NumberedList','BulletedList','-','CreateDiv','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'] },
+		{ name: 'links', items : [ 'Link','Unlink'] },
+		'/',
+		{ name: 'styles', items : [ 'Styles','Format'] },
+		{ name: 'insert', items : [ 'Image','Flash','Table','HorizontalRule','SpecialChar','PageBreak'] },
+		{ name: 'additional', items : [ 'CreateFlashplaceholder','CreateGadget'] },
+	];
+	config.toolbar_LectionFull =
+	[
+		{ name: 'document', items : [ 'Source','-','Preview','-','Templates' ] },
+		{ name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','CreateWorddoc','-','Undo','Redo' ] },
+		{ name: 'editing', items : [ 'Find','Replace','-','SelectAll' ] },
+		{ name: 'tools', items : [ 'Maximize', 'ShowBlocks'] },
+		'/',
+		{ name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
+		{ name: 'paragraph', items : [ 'NumberedList','BulletedList','-','CreateDiv','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'] },
+		{ name: 'links', items : [ 'Link','Unlink'] },
+		'/',
+		{ name: 'styles', items : [ 'Styles','Format','Font','FontSize','TextColor','BGColor'] },
+		{ name: 'insert', items : [ 'Image','Flash','Table','HorizontalRule','SpecialChar','PageBreak'] },
+		{ name: 'additional', items : [ 'CreateFlashplaceholder','CreateGadget'] },
+	];
+	config.toolbar_Forum =
+	[
+		{ name: 'document', items : [ 'Source','-','Preview','-','Templates' ] },
+		{ name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','-','Undo','Redo' ] },
+		{ name: 'editing', items : [ 'Find','Replace','-','SelectAll' ] },
+		{ name: 'tools', items : [ 'Maximize', 'ShowBlocks'] },
+		'/',
+		{ name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
+		{ name: 'paragraph', items : [ 'NumberedList','BulletedList','-','CreateDiv','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'] },
+		{ name: 'links', items : [ 'Link','Unlink'] },
+		'/',
+		{ name: 'styles', items : [ 'Styles','Format'] },
+		{ name: 'insert', items : [ 'Image','Table','HorizontalRule','Smiley'] },
+	];
+	config.toolbar_Task =
+	[
+
+		{ name: 'editing', items : [ 'Find','Replace','-','SelectAll' ] },
+		{ name: 'tools', items : [ 'Maximize', 'ShowBlocks'] },
+		'/',
+		{ name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
+		{ name: 'links', items : [ 'Link','Unlink'] },
+		'/',
+		{ name: 'insert', items : [ 'Image','Table','HorizontalRule','Smiley'] },
+	];
+	config.toolbar_Message =
+	[
+
+		{ name: 'insert', items : [ 'Smiley','Link','Unlink'] }
+	];
+	config.toolbar_Wall =
+	[
+		{ name: 'insert', items : [ 'Smiley','Link','Unlink','Image'] }
+	];
+	config.toolbar_SiteEl =
+	[
+		{ name: 'insert', items : [ 'Source','Smiley','Link','Unlink','Image'] }
+	];
+	//config.corePlugins
+	config.extraPlugins = 'flashplaceholder,metka,worddoc,gadget,imagepaste';//carousel 28.12.17
+	//config.plugins
+	config.language='ru';
+	config.dialog_backgroundCoverColor='#286884';
+	config.fillEmptyBlocks=true;
+	config.enterMode = CKEDITOR.ENTER_P;
+	config.forceEnterMode = true;
+	//config.shiftEnterMode = CKEDITOR.ENTER_P;
+	config.image_previewText='«Классная оценка»  – уникальный инновационный проект, направленный на повышение уровня образования детей благодаря доступу к лучшим педагогическим наработкам и созданию системы непрерывного образования через организацию единого учебно-воспитательного пространства учебных заведений.';
+	config.justifyClasses = [ 'Left', 'Center', 'Right', 'Justify' ];
+	config.pasteFromWordPromptCleanup=true;
+	config.pasteFromWordRemoveFontStyles=true;
+	config.pasteFromWordRemoveStyles=true;
+
+	//List of regular expressions to be executed on input HTML, indicating HTML source code that when matched, must not be available in the WYSIWYG mode for editing.
+	//config.protectedSource
+
+	//config.removeFormatAttributes='class,style,lang,width,height,align,hspace,valign';
+	config.removeFormatTags='b,big,code,del,dfn,em,font,i,ins,kbd,q,samp,small,span,strike,strong,sub,sup,tt,u,var,ul';
+
+	config.smiley_descriptions =
+    [
+        'smiley', 'sad', 'wink', 'laugh', 'frown', 'cheeky', 'blush', 'surprise',
+        'indecision', 'angry', 'angel', 'cool', 'devil', 'crying', 'enlightened', 'no',
+        'yes', 'heart', 'broken heart', 'kiss', 'mail'
+    ];
+    /*config.smiley_descriptions =
+    [
+        ':)', ':(', ';)', ':D', ':/', ':P', ':*)', ':-o',
+        ':|', '>:(', 'o:)', '8-)', '>:-)', ';(', '', '', '',
+        '', '', ':-*', ''
+    ];*/
+    config.smiley_descriptions =
+    [
+        'Улыбаюсь', 'Смеюсь', 'Грущу', 'Крутой', 'Удивляюсь','Подмигиваю','Плачущая рожица','Потею',
+        'Нет слов','Поцелуй','Хитренький','Макияж','Хихи','Овации','Это не я!','Поклон',
+        'Катаюсь по полу от смеха','Устал','Ухмылка','Ммммм...','Кивок','Танцы','HM','Звезда',
+      /* 'Краснею','Сомневаюсь','Сонный','Мне скучно','Влюблен',
+        'Злобная ухмылка','Кулачки','Зеваю','Тошнит','Ну конечно!','Злой','Праздник',
+        'Волнуюсь','Очкарик','Молчу как могила','Привет','Что же делать?','Дьявол','Ангел',
+        'Завидую','Подожди','Обнимаю','Думаю',
+        'Слава Богу!','Счастье','Мотание головой','Ожидание','Эмо',
+        'Да','Нет','Рукопожатие','Молодец!','Сердце','Не слушаю','Белочка','Цветок',
+        'Дождь','Солнце','И тишина...','Музыка','Бандит','Слишком много информации','Кофе','Пицца',
+        'Деньги','Бицепс','Торт','Пиво','Коктейль','Ниндзя',
+        '','','','','','','','',*/
+    ];
+    config.smiley_descriptions =
+    [
+        'angel','devil','smiley','chuckle','laugh','sad',
+    ];
+    config.smiley_columns	= '20' ;
+    config.smiley_path	= '/ckeditor/plugins/smiley/images/skype/' ;
+	config.smiley_images = [
+		'1.gif', '2.gif', '3.gif', '4.gif', '5.gif', '6.gif', '7.gif', '8.gif', '9.gif', '10.gif',
+		'11.gif', '12.gif', '13.gif', '14.gif', '15.gif', '16.gif', '17.gif', '18.gif', '19.gif', '20.gif',
+		'21.gif', '22.gif', '23.gif', '26.gif', '27.gif', '28.gif', '29.gif', '30.gif',
+		'31.gif', '32.gif', '33.gif', '34.gif', '35.gif', '36.gif', '37.gif', '38.gif', '39.gif', '40.gif',
+		'41.gif', '42.gif', '43.gif', '44.gif', '45.gif', '46.gif', '47.gif', '48.gif', '49.gif', '50.gif',
+		'51.gif', '52.gif', '53.gif', '54.gif', '55.gif', '56.gif', '57.gif', '58.gif', '59.gif', '60.gif',
+		'61.gif', '62.gif', '63.gif', '64.gif', '65.gif', '66.gif', '67.gif', '68.gif', '69.gif', '70.gif',
+		'71.gif', '72.gif', '73.gif', '74.gif', '75.gif', '76.gif', '77.gif', '78.gif', '79.gif', '80.gif',
+		'81.gif', '82.gif', '83.gif', '84.gif', '85.gif'
+	] ;
+	/*
+	config.smiley_images = [
+	    'regular_smile.gif','sad_smile.gif','wink_smile.gif','teeth_smile.gif','confused_smile.gif','tounge_smile.gif',
+	    'embaressed_smile.gif','omg_smile.gif','whatchutalkingabout_smile.gif','angry_smile.gif','angel_smile.gif','shades_smile.gif',
+	    'devil_smile.gif','cry_smile.gif','lightbulb.gif','thumbs_down.gif','thumbs_up.gif','heart.gif',
+	    'broken_heart.gif','kiss.gif','envelope.gif'
+    ];
+    */
+    config.specialChars = config.specialChars.concat( [ '"', [ ,"&le;","&ge;","&equiv;","&asymp;","&ne;","&isin;","&notin;" ] ] );
+	config.format_tags = 'p;h1;h2;h3;h4;h5;h6;div';
+	config.stylesSet = [
+	 	//{ name : 'Номер формулы (1.13)', element : 'span', attributes : { 'class' : 'formula' } },
+
+		{ name : 'Текст синий', element : 'span', attributes : { 'class' : 'blue' } },
+		{ name : 'Текст зеленый', element : 'span', attributes : { 'class' : 'green' } },
+		{ name : 'Текст красный', element : 'span', attributes : { 'class' : 'red' } },
+
+		{ name : 'Шрифт 10', element : 'span', attributes : { 'class' : 'fs_10' } },
+		{ name : 'Шрифт 12', element : 'span', attributes : { 'class' : 'fs_12' } },
+		{ name : 'Шрифт 14', element : 'span', attributes : { 'class' : 'fs_14' } },
+		{ name : 'Шрифт 16', element : 'span', attributes : { 'class' : 'fs_16' } },
+		{ name : 'Шрифт 18', element : 'span', attributes : { 'class' : 'fs_18' } },
+
+		{ name : 'Стрелка (синий)', element : 'div', attributes : { 'class' : 'arrow_blue' } },
+		{ name : 'Стрелка (зеленый)', element : 'div', attributes : { 'class' : 'arrow_green' } },
+		{ name : 'Стрелка (красный)', element : 'div', attributes : { 'class' : 'arrow_red' } },
+
+		{ name : 'Формула (синий)', element : 'div', attributes : { 'class' : 'calque_blue' } },
+		{ name : 'Формула (зеленый)', element : 'div', attributes : { 'class' : 'calque_green' } },
+		{ name : 'Формула (красный)', element : 'div', attributes : { 'class' : 'calque_red' } },
+
+		{ name : 'Правило (синий)', element : 'div', attributes : { 'class' : 'rule_blue' } },
+		{ name : 'Правило (зеленый)', element : 'div', attributes : { 'class' : 'rule_green' } },
+		{ name : 'Правило (красный)', element : 'div', attributes : { 'class' : 'rule_red' } },
+
+		{ name : 'Замечание (синий)', element : 'div', attributes : { 'class' : 'note_blue' } },
+		{ name : 'Замечание (зеленый)', element : 'div', attributes : { 'class' : 'note_green' } },
+		{ name : 'Замечание (красный)', element : 'div', attributes : { 'class' : 'note_red' } },
+
+		{ name : 'Вопросы (синий)', element : 'div', attributes : { 'class' : 'question_blue' } },
+		{ name : 'Вопросы (зеленый)', element : 'div', attributes : { 'class' : 'question_green' } },
+		{ name : 'Вопросы (красный)', element : 'div', attributes : { 'class' : 'question_red' } },
+
+		{ name : 'Важно (синий)', element : 'div', attributes : { 'class' : 'exclam_blue' } },
+		{ name : 'Важно (зеленый)', element : 'div', attributes : { 'class' : 'exclam_green' } },
+		{ name : 'Важно (красный)', element : 'div', attributes : { 'class' : 'exclam_red' } },
+
+		{ name : 'Рамка зеленая', element : 'div', attributes : { 'class' : 'border_green' } },
+		{ name : 'Рамка оранжевая', element : 'div', attributes : { 'class' : 'border_orange' } },
+		{ name : 'Рамка голубая', element : 'div', attributes : { 'class' : 'border_blue' } },
+
+		{ name : 'Комментарий оранжевый', element : 'div', attributes : { 'class' : 'comment_red' } },
+		{ name : 'Постановка проблемы', element : 'div', attributes : { 'class' : 'problem_statement' } },
+		{ name : 'Пример оранжевый', element : 'div', attributes : { 'class' : 'example' } },
+		{ name : 'Пример голубой', element : 'div', attributes : { 'class' : 'example_blue' } },
+
+		{ name : 'Формула в рамке', element : 'img', attributes : { 'class' : 'img_formula',  'align' : 'center'} },
+		{ name : 'Картинка слева', element : 'img', attributes : { 'class' : 'image_on_left',  'align' : 'left',  'border' : '2' } },
+		{ name : 'Картинка справа', element : 'img', attributes : { 'class' : 'image_on_right',  'align' : 'right',  'border' : '2' } },
+		{ name : 'Таблица (заголовки на розовом фоне)', element : 'table', attributes : { 'class' : 'lection_table' } },
+		{ name : 'Строка (голубой фон)', element : 'tr', attributes : { 'class' : 'tr_blue' } }
+	];
+	config.uiColor='#bedcf9';
+	config.justifyClasses = [ 'Left', 'Center', 'Right', 'Justified' ];
+	config.coreStyles_bold = { element : 'b', overrides : 'b' };
+};
+CKEDITOR.on('dialogDefinition', function(ev) {
+    var dialogName = ev.data.name,
+        dialogDefinition = ev.data.definition;
+
+     if (dialogName === 'link') {
+        dialogDefinition.removeContents('upload');
+    }
+     if (dialogName === 'flash') {
+        dialogDefinition.removeContents('Upload');
+    }
+     if (dialogName === 'image') {
+        dialogDefinition.removeContents('Upload');
+    }
+	if (dialogName === 'common') {
+        dialogDefinition.removeContents('Upload');
+    }
+});
+CKEDITOR.on('instanceReady', function (ev) {
+	CKEDITOR.on('dialogDefinition', function(ev) {
+    var dialogName = ev.data.name,
+        dialogDefinition = ev.data.definition;
+    if (dialogName === 'image') {
+        dialogDefinition.removeContents('Upload');
+    }
+});
+// Ends self closing tags the HTML4 way, like <br>.
+ev.editor.dataProcessor.htmlFilter.addRules(
+    {
+        elements:
+        {
+            $: function (element) {
+                // Output dimensions of images as width and height
+                if (element.name == 'img') {
+                    var style = element.attributes.style;
+
+                    if (style) {
+                        // Get the width from the style.
+                        var match = /(?:^|\s)width\s*:\s*(\d+)px/i.exec(style),
+                            width = match && match[1];
+
+                        // Get the height from the style.
+                        match = /(?:^|\s)height\s*:\s*(\d+)px/i.exec(style);
+                        var height = match && match[1];
+
+                        if (width) {
+                            element.attributes.style = element.attributes.style.replace(/(?:^|\s)width\s*:\s*(\d+)px;?/i, '');
+                            element.attributes.width = width;
+                        }
+
+                        if (height) {
+                            element.attributes.style = element.attributes.style.replace(/(?:^|\s)height\s*:\s*(\d+)px;?/i, '');
+                            element.attributes.height = height;
+                        }
+
+                        // Get the float from the style.
+                        match = /(?:^|\s)float\s*:\s*(\w+)/i.exec(style);
+                        var float = match && match[1];
+
+                        if (float) {
+                            element.attributes.style = element.attributes.style.replace(/(?:^|\s)float\s*:\s*(\w+);?/i, '');
+                            element.attributes.align = float;
+                        }
+                    }
+                }
+
+
+
+                if (!element.attributes.style)
+                    delete element.attributes.style;
+
+                return element;
+            }
+        }
+    });
+ });

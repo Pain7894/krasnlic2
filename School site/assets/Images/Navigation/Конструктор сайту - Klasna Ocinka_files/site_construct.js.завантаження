@@ -1,0 +1,93 @@
+function check_structure() {
+    ch = $('#Site_structure_1').attr('checked');
+    if (ch) {
+        $('#class_structure1').css('display', 'block');
+        if ($('#Site_class_structure').attr('checked')) {
+            $('#class_structure_text1').css('display', 'block');
+        }
+        else {
+            $('#class_structure_text1').css('display', 'none');
+        }
+    }
+    else {
+        $('#class_structure1').css('display', 'none');
+    }
+}
+
+function page_type(el) {
+    if (el.value == "2") {
+        document.getElementById('row_SiteMenu_meta').style.display = 'none';
+    }
+    else {
+        document.getElementById('row_SiteMenu_meta').style.display = 'block';
+    }
+
+}
+
+function next_menu(site_menu_id, open_in_window) {
+    $('#next_id').val(site_menu_id);
+    $('#open_in_window').val(open_in_window);
+    document.stepform.submit();
+    return false;
+}
+
+function select_design(did, dscreen, dname) {
+    $('#Site_design_id').val(did);
+    $('#design_screen').attr('src', dscreen);
+    $('.dem_box_t h2').text(dname);
+    tb_remove();
+    return false;
+}
+
+function changeParentSection(obj, parent_id) {
+    
+	var menu_id = $(obj).val();
+    var site_id = $("#SiteMenu_site_id").val();
+    var menu = $("#top_item_value").val();
+    var menu_name=$("#SiteMenu_menu_id option:selected").text();
+    /*if(menu_id==0) {
+    	$("#SiteMenu-parent-row").val("0");
+    	$("#SiteMenu-parent-row").hide();
+    	return ;
+    }*/
+    //alert('/site/construct/menulist/site_id/'+site_id+'/menu_id/'+menu_id);
+    $("#SiteMenu-parent-row").show();
+    $.ajax({
+        url: '/site/construct/menulist/site_id/'+site_id+'/menu_id/'+menu_id,
+        type: "get",
+        dataType: "json",
+        complete: function (o) { 
+            var response = eval("new Object(" + o.responseText + ")");
+
+            var count = Object.keys(response.items).length;
+            $("#SiteMenu_parent_id").empty();
+            rr = '<option style= "color:#D5322F;font-weight:bold;" value="0"> '+menu_name+menu+'</option>';
+            $("#SiteMenu_parent_id").append(rr);
+	          for (var i = 0; i < count; i++) {
+	                selected="";
+	                if(response.items[i].id == parent_id)
+	                {
+	                    selected = "selected";	
+	                }
+	
+	                rr = '<option value="' + response.items[i].id + '" ' + selected + '> ';
+	                for (var t = response.items[i].level; t > 0; t--) {
+	                    rr += "&nbsp;&nbsp;"; 
+	                }
+	                rr += response.items[i].name + '</option>';
+	                $("#SiteMenu_parent_id").append(rr);
+	
+	            }
+            return false;
+        },
+        error: function (o) { 
+        	alert(o.responseText);
+        }
+    });
+}
+
+$(document).ready(function() {
+    $("h4.dashed").click(function () {
+    	$(this).next().toggleClass("d_no");
+    });
+});

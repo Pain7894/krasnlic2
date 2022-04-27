@@ -1,0 +1,5 @@
+function submit_step(step_key) {
+	inpt='<input type="hidden" name="next_step" id="next_step" value="'+step_key+'">';
+	$(inpt).appendTo('#stepform');
+	document.stepform.submit();
+}

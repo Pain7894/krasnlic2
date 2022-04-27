@@ -1,0 +1,171 @@
+﻿/*
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.html or http://ckeditor.com/license
+*/
+
+/**
+ * @fileOverview The "placeholder" plugin.
+ *
+ */
+
+(function()
+{
+	var metkaReplaceRegex = /\[\[[^\]]+\]\]/g;
+	CKEDITOR.plugins.add( 'metka',
+	{
+		requires : [ 'dialog' ],
+		lang : [ 'en', 'ru', 'ua' ],
+		init : function( editor )
+		{
+			var lang = editor.lang.metka;
+
+			editor.addCommand( 'createmetka', new CKEDITOR.dialogCommand( 'createmetka' ) );
+			editor.addCommand( 'editmetka', new CKEDITOR.dialogCommand( 'editmetka' ) );
+
+			editor.ui.addButton( 'CreateMetka',
+			{
+				label : lang.toolbar,
+				command :'createmetka',
+				icon : this.path + 'metka.gif'
+			});
+
+			if ( editor.addMenuItems )
+			{
+				editor.addMenuGroup( 'metka', 20 );
+				editor.addMenuItems(
+					{
+						editmetka :
+						{
+							label : lang.edit,
+							command : 'editmetka',
+							group : 'metka',
+							order : 1,
+							icon : this.path + 'metka.gif'
+						}
+					} );
+
+				if ( editor.contextMenu )
+				{
+					editor.contextMenu.addListener( function( element, selection )
+						{
+							if ( !element || !element.data( 'cke-metka' ) )
+								return null;
+
+							return { editmetka : CKEDITOR.TRISTATE_OFF };
+						} );
+				}
+			}
+
+			editor.on( 'doubleclick', function( evt )
+				{
+					if ( CKEDITOR.plugins.metka.getSelectedPlaceHoder( editor ) )
+						evt.data.dialog = 'editmetka';
+				});
+
+			editor.addCss(
+				'.cke_metka' +
+				'{' +
+					'background-color: #ffff00;' +
+					( CKEDITOR.env.gecko ? 'cursor: default;' : '' ) +
+				'}'
+			);
+
+			editor.on( 'contentDom', function()
+				{
+					editor.document.getBody().on( 'resizestart', function( evt )
+						{
+							if ( editor.getSelection().getSelectedElement().data( 'cke-metka' ) )
+								evt.data.preventDefault();
+						});
+				});
+
+			CKEDITOR.dialog.add( 'createmetka', this.path + 'dialogs/metka.js' );
+			CKEDITOR.dialog.add( 'editmetka', this.path + 'dialogs/metka.js' );
+		},
+		afterInit : function( editor )
+		{
+			var dataProcessor = editor.dataProcessor,
+				dataFilter = dataProcessor && dataProcessor.dataFilter,
+				htmlFilter = dataProcessor && dataProcessor.htmlFilter;
+
+			if ( dataFilter )
+			{
+				dataFilter.addRules(
+				{
+					text : function( text )
+					{
+						return text.replace( metkaReplaceRegex, function( match )
+							{
+								return CKEDITOR.plugins.metka.createMetka( editor, null, match, 1 );
+							});
+					}
+				});
+			}
+
+			if ( htmlFilter )
+			{
+				htmlFilter.addRules(
+				{
+					elements :
+					{
+						'span' : function( element )
+						{
+							if ( element.attributes && element.attributes[ 'data-cke-metka' ] && !element.attributes['data-cke-flashplaceholder'])
+								delete element.name;
+						}
+					}
+				});
+			}
+		}
+	});
+})();
+
+CKEDITOR.plugins.metka =
+{
+	createMetka : function( editor, oldElement, text, isGet )
+	{
+		var element = new CKEDITOR.dom.element( 'span', editor.document );
+		element.setAttributes(
+			{
+				contentEditable		: 'false',
+				'data-cke-metka'	: 1,
+				'class'			: 'cke_metka'
+			}
+		);
+
+		text && element.setText( text );
+
+		if ( isGet )
+			return element.getOuterHtml();
+
+		if ( oldElement )
+		{
+			if ( CKEDITOR.env.ie )
+			{
+				element.insertAfter( oldElement );
+				// Some time is required for IE before the element is removed.
+				setTimeout( function()
+					{
+						oldElement.remove();
+						element.focus();
+					}, 10 );
+			}
+			else
+				element.replace( oldElement );
+		}
+		else
+			editor.insertElement( element );
+
+		return null;
+	},
+
+	getSelectedPlaceHoder : function( editor )
+	{
+		var range = editor.getSelection().getRanges()[ 0 ];
+		range.shrink( CKEDITOR.SHRINK_TEXT );
+		var node = range.startContainer;
+		while( node && !( node.type == CKEDITOR.NODE_ELEMENT && node.data( 'cke-metka' ) ) )
+			node = node.getParent();
+		return node;
+	}
+};
